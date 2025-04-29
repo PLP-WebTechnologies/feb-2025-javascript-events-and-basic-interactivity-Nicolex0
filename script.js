@@ -24,3 +24,14 @@ magicButton.addEventListener('dblclick', () => {
         magicButton.style.transform = 'scale(1)';
     }, 300);
 });
+
+// Long press detection
+let pressTimer;
+magicButton.addEventListener('mousedown', () => {
+    pressTimer = setTimeout(() => {
+        buttonMessage.textContent = 'Long Press Detected! 🕒';
+        magicButton.style.backgroundColor = '#ff4444';
+    }, 1000);
+});
+magicButton.addEventListener('mouseup', () => clearTimeout(pressTimer));
+magicButton.addEventListener('mouseleave', () => clearTimeout(pressTimer));
