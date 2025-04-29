@@ -35,3 +35,32 @@ magicButton.addEventListener('mousedown', () => {
 });
 magicButton.addEventListener('mouseup', () => clearTimeout(pressTimer));
 magicButton.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+
+// Keypress detection (Enter key)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && document.activeElement === magicButton) {
+        buttonMessage.textContent = 'Enter key pressed! 🚀';
+    }
+});
+
+// Slideshow
+const slides = document.querySelectorAll('.slide');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+let currentSlide = 0;
+
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+    });
+}
+
+prevButton.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+});
+
+nextButton.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+});
