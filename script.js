@@ -78,3 +78,85 @@ tabButtons.forEach(button => {
         document.getElementById(button.dataset.tab).classList.add('active');
     });
 });
+
+// Form Validation
+const form = document.getElementById('signup-form');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const nameError = document.getElementById('name-error');
+const emailError = document.getElementById('email-error');
+const passwordError = document.getElementById('password-error');
+
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validateForm() {
+    let isValid = true;
+
+    // Name validation
+    if (!nameInput.value.trim()) {
+        nameError.textContent = 'Name is required';
+        isValid = false;
+    } else {
+        nameError.textContent = '';
+    }
+
+    // Email validation
+    if (!emailInput.value.trim()) {
+        emailError.textContent = 'Email is required';
+        isValid = false;
+    } else if (!validateEmail(emailInput.value)) {
+        emailError.textContent = 'Invalid email format';
+        isValid = false;
+    } else {
+        emailError.textContent = '';
+    }
+
+    // Password validation
+    if (!passwordInput.value) {
+        passwordError.textContent = 'Password is required';
+        isValid = false;
+    } else if (passwordInput.value.length < 8) {
+        passwordError.textContent = 'Password must be at least 8 characters';
+        isValid = false;
+    } else {
+        passwordError.textContent = '';
+    }
+
+    return isValid;
+}
+
+// Real-time feedback
+nameInput.addEventListener('input', () => {
+    if (nameInput.value.trim()) {
+        nameError.textContent = '';
+    } else {
+        nameError.textContent = 'Name is required';
+    }
+});
+
+emailInput.addEventListener('input', () => {
+    if (validateEmail(emailInput.value)) {
+        emailError.textContent = '';
+    } else {
+        emailError.textContent = emailInput.value ? 'Invalid email format' : 'Email is required';
+    }
+});
+
+passwordInput.addEventListener('input', () => {
+    if (passwordInput.value.length >= 8) {
+        passwordError.textContent = '';
+    } else {
+        passwordError.textContent = passwordInput.value ? 'Password must be at least 8 characters' : 'Password is required';
+    }
+});
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+        alert('Form submitted successfully!');
+        form.reset();
+    }
+});
